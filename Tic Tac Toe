@@ -1,0 +1,830 @@
+
+#include <Keypad.h>
+ 
+char keys[3][3]={
+ {'1','2','3'}, //naming each button on the pad
+ {'4','5','6'},
+ {'7','8','9'},
+ };
+ 
+byte rowPin[3]={8,9,10}; //the rows of the button pad are attatched to pins 8-10 on the arduino
+byte colPin[3]={11,12,13}; //the colummns of the button pad are attatched to pins 11-13 on the arduino
+ 
+Keypad keypad=Keypad(makeKeymap(keys),rowPin,colPin,3,3);
+
+int ledNumbers[18] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //each zero represents each LED in its yellow state and green state
+int turn = 0; //for the odd/even turns
+void setup()
+{
+ Serial.begin(9600);
+ pinMode( A5, OUTPUT);//cathode
+ pinMode(A4, OUTPUT);//cathode
+ pinMode(A3, OUTPUT);//cathode
+ pinMode(2, OUTPUT);//yellow anode
+ pinMode(3, OUTPUT);//yellow anode
+ pinMode(4, OUTPUT);//yellow anode
+ pinMode(5, OUTPUT);//green anode
+ pinMode(6, OUTPUT);//green anode
+ pinMode(7, OUTPUT);//green anode
+
+
+ //Initialization
+  digitalWrite(A5, HIGH); //GREEN wire
+  digitalWrite(A4, HIGH); //BLUE wire
+  digitalWrite(A3, HIGH);//PURPLE wire
+  digitalWrite(4, LOW);//GREY wire
+  digitalWrite(3, LOW);//BLACK wire
+  digitalWrite(2, LOW);//WHITE wire
+  digitalWrite(5, LOW);//RED wire
+  digitalWrite(6, LOW);//YELLOW wire
+  digitalWrite(7, LOW);//ORANGE wire
+}
+ 
+void loop(){
+
+  char button=keypad.getKey(); //button is the character
+   {Serial.println(button);}
+ 
+for(int i = 0;i < 18; i++)
+{
+   if (ledNumbers[i] == 1)
+{
+  ledState(i);
+  delay(1); //the blinking in between
+}
+}
+if ( button == '1' ) // if button 1 is pressed
+
+{
+  turn ++;
+
+  if (turn %2 == 1) // AND its an odd turn
+  {
+    ledNumbers[0] = 1; //turn the LED Number, that is first or '0', to 1
+  }
+  else // even turn //if its even
+  {
+    ledNumbers[1] = 1; //turn the LED number, that is second or '1', to 1
+  }
+}//This continues on for each button. The firts if statement is for the yellow and the 2nd is for the green
+else if ( button == '2')
+  {
+  turn ++;
+
+  if (turn %2 == 1)
+  {
+    ledNumbers[2] = 1;
+  }
+  else
+  {
+    ledNumbers[3] = 1;
+  }
+}
+
+else if ( button == '3')
+  {
+  turn ++;
+
+  if (turn %2 == 1)
+  {
+    ledNumbers[4] = 1;
+  }
+  else
+  {
+    ledNumbers[5] = 1;
+  }
+}
+
+else if ( button == '4')
+  {
+  turn ++;
+
+  if (turn %2 == 1)
+  {
+    ledNumbers[6] = 1;
+  }
+  else
+  {
+    ledNumbers[7] = 1;
+  }
+}
+
+else if ( button == '5')
+  {
+  turn ++;
+
+  if (turn %2 == 1)
+  {
+    ledNumbers[8] = 1;
+  }
+  else
+  {
+    ledNumbers[9] = 1;
+  }
+}
+
+else if ( button == '6')
+  {
+  turn ++;
+
+  if (turn %2 == 1)
+  {
+    ledNumbers[10] = 1;
+  }
+  else
+  {
+    ledNumbers[11] = 1;
+  }
+}
+
+else if ( button == '7')
+  {
+  turn ++;
+
+  if (turn %2 == 1)
+  {
+    ledNumbers[12] = 1;
+  }
+  else
+  {
+    ledNumbers[13] = 1;
+  }
+}
+
+else if ( button == '8')
+  {
+  turn ++;
+
+  if (turn %2 == 1)
+  {
+    ledNumbers[14] = 1;
+  }
+  else
+  {
+    ledNumbers[15] = 1;
+  }
+}
+
+else if ( button == '9')
+  {
+  turn ++;
+
+  if (turn %2 == 1)
+  {
+    ledNumbers[16] = 1;
+  }
+  else
+  {
+    ledNumbers[17] = 1;
+  }
+  } 
+ 
+if ( ledNumbers[0] == 1 && ledNumbers[6] == 1 && ledNumbers[12] == 1) //Row w/buttons 1, 4, and 7 GREEN
+{
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[0] = 1;
+  ledNumbers[2] = 1;
+  ledNumbers[4] = 1;
+  ledNumbers[6] = 1;
+  ledNumbers[8] = 1;
+  ledNumbers[10] = 1;
+  ledNumbers[12] = 1;
+  ledNumbers[14] = 1;
+  ledNumbers[16] = 1;
+}
+else if ( ledNumbers[1] == 1 && ledNumbers[7] == 1&& ledNumbers[13] == 1)// Row w/buttons 1, 4, and 7 YELLOW
+{
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[1] = 1; 
+  ledNumbers[3] = 1;
+  ledNumbers[5] = 1;
+  ledNumbers[7] = 1;
+  ledNumbers[9] = 1;
+  ledNumbers[11] = 1;
+  ledNumbers[13] = 1;
+  ledNumbers[15] = 1;
+}
+else if ( ledNumbers[2] == 1 && ledNumbers[8] == 1&& ledNumbers[14] == 1)// Row w/buttons 2, 5, and 8 GREEN
+{
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[0] = 1;
+  ledNumbers[2] = 1;
+  ledNumbers[4] = 1;
+  ledNumbers[6] = 1;
+  ledNumbers[8] = 1;
+  ledNumbers[10] = 1;
+  ledNumbers[12] = 1;
+  ledNumbers[14] = 1;
+  ledNumbers[16] = 1;
+}
+else if ( ledNumbers[3] == 1 && ledNumbers[9] == 1&& ledNumbers[15] == 1)// Row w/buttons 2, 5, and 8 YELLOW
+{
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[1] = 1; 
+  ledNumbers[3] = 1;
+  ledNumbers[5] = 1;
+  ledNumbers[7] = 1;
+  ledNumbers[9] = 1;
+  ledNumbers[11] = 1;
+  ledNumbers[13] = 1;
+  ledNumbers[15] = 1;
+}
+else if ( ledNumbers[4] == 1 && ledNumbers[10] == 1&& ledNumbers[16] == 1)// Row w/buttons 3, 6, and 9 GREEN
+{
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[0] = 1;
+  ledNumbers[2] = 1;
+  ledNumbers[4] = 1;
+  ledNumbers[6] = 1;
+  ledNumbers[8] = 1;
+  ledNumbers[10] = 1;
+  ledNumbers[12] = 1;
+  ledNumbers[14] = 1;
+  ledNumbers[16] = 1;
+}
+else if ( ledNumbers[5] == 1 && ledNumbers[11] == 1&& ledNumbers[17] == 1)// Row w/buttons 3, 6, and 9 YELLOW
+{
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[1] = 1; 
+  ledNumbers[3] = 1;
+  ledNumbers[5] = 1;
+  ledNumbers[7] = 1;
+  ledNumbers[9] = 1;
+  ledNumbers[11] = 1;
+  ledNumbers[13] = 1;
+  ledNumbers[15] = 1;
+}
+else if ( ledNumbers[16] == 1 && ledNumbers[14] == 1&& ledNumbers[12] == 1)// buttons 7, 8, 9 GREEN
+{
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[0] = 1;
+  ledNumbers[2] = 1;
+  ledNumbers[4] = 1;
+  ledNumbers[6] = 1;
+  ledNumbers[8] = 1;
+  ledNumbers[10] = 1;
+  ledNumbers[12] = 1;
+  ledNumbers[14] = 1;
+  ledNumbers[16] = 1;
+}
+else if ( ledNumbers[17] == 1 && ledNumbers[15] == 1&& ledNumbers[13] == 1)// buttons 7, 8, 9 YELLOW
+{
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[1] = 1; 
+  ledNumbers[3] = 1;
+  ledNumbers[5] = 1;
+  ledNumbers[7] = 1;
+  ledNumbers[9] = 1;
+  ledNumbers[11] = 1;
+  ledNumbers[13] = 1;
+  ledNumbers[15] = 1;
+}
+else if ( ledNumbers[6] == 1 && ledNumbers[8] == 1&& ledNumbers[10] == 1)// buttons 4, 5, 6 GREEN
+{
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[0] = 1;
+  ledNumbers[2] = 1;
+  ledNumbers[4] = 1;
+  ledNumbers[6] = 1;
+  ledNumbers[8] = 1;
+  ledNumbers[10] = 1;
+  ledNumbers[12] = 1;
+  ledNumbers[14] = 1;
+  ledNumbers[16] = 1;
+}
+else if ( ledNumbers[7] == 1 && ledNumbers[9] == 1&& ledNumbers[11] == 1)// 4, 5, 6 YELLOW
+{
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[1] = 1; 
+  ledNumbers[3] = 1;
+  ledNumbers[5] = 1;
+  ledNumbers[7] = 1;
+  ledNumbers[9] = 1;
+  ledNumbers[11] = 1;
+  ledNumbers[13] = 1;
+  ledNumbers[15] = 1;
+}
+else if ( ledNumbers[0] == 1 && ledNumbers[2] == 1&& ledNumbers[4] == 1)// buttons 1, 2, 3 GREEN
+{
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[0] = 1;
+  ledNumbers[2] = 1;
+  ledNumbers[4] = 1;
+  ledNumbers[6] = 1;
+  ledNumbers[8] = 1;
+  ledNumbers[10] = 1;
+  ledNumbers[12] = 1;
+  ledNumbers[14] = 1;
+  ledNumbers[16] = 1;
+}
+else if ( ledNumbers[1] == 1 && ledNumbers[3] == 1&& ledNumbers[5] == 1)// 1, 2, 3 YELLOW
+{
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[1] = 1; 
+  ledNumbers[3] = 1;
+  ledNumbers[5] = 1;
+  ledNumbers[7] = 1;
+  ledNumbers[9] = 1;
+  ledNumbers[11] = 1;
+  ledNumbers[13] = 1;
+  ledNumbers[15] = 1;
+}
+else if ( ledNumbers[0] == 1 && ledNumbers[8] == 1&& ledNumbers[16] == 1)// DIAGONAL 1, 5, 9 GREEN
+{
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[0] = 1;
+  ledNumbers[2] = 1;
+  ledNumbers[4] = 1;
+  ledNumbers[6] = 1;
+  ledNumbers[8] = 1;
+  ledNumbers[10] = 1;
+  ledNumbers[12] = 1;
+  ledNumbers[14] = 1;
+  ledNumbers[16] = 1;
+}
+else if ( ledNumbers[1] == 1 && ledNumbers[9] == 1&& ledNumbers[17] == 1)// DIAGONAL 1, 5, 9 YELLOW
+{
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[1] = 1; 
+  ledNumbers[3] = 1;
+  ledNumbers[5] = 1;
+  ledNumbers[7] = 1;
+  ledNumbers[9] = 1;
+  ledNumbers[11] = 1;
+  ledNumbers[13] = 1;
+  ledNumbers[15] = 1;
+}
+else if ( ledNumbers[4] == 1 && ledNumbers[8] == 1&& ledNumbers[12] == 1)// DIAGONAL 3, 5, 7 GREEN
+{
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[0] = 1;
+  ledNumbers[2] = 1;
+  ledNumbers[4] = 1;
+  ledNumbers[6] = 1;
+  ledNumbers[8] = 1;
+  ledNumbers[10] = 1;
+  ledNumbers[12] = 1;
+  ledNumbers[14] = 1;
+  ledNumbers[16] = 1;
+}
+else if ( ledNumbers[5] == 1 && ledNumbers[9] == 1&& ledNumbers[13] == 1)// DIAGONAL 3, 5, 7 YELLOW
+{
+  ledNumbers[0] = 0; 
+  ledNumbers[2] = 0;
+  ledNumbers[4] = 0;
+  ledNumbers[8] = 0;
+  ledNumbers[10] = 0;
+  ledNumbers[12] = 0;
+  ledNumbers[14] = 0;
+  ledNumbers[16] = 0;
+  ledNumbers[1] = 0; 
+  ledNumbers[3] = 0;
+  ledNumbers[5] = 0;
+  ledNumbers[7] = 0;
+  ledNumbers[9] = 0;
+  ledNumbers[11] = 0;
+  ledNumbers[13] = 0;
+  ledNumbers[15] = 0;
+  ledNumbers[1] = 1; 
+  ledNumbers[3] = 1;
+  ledNumbers[5] = 1;
+  ledNumbers[7] = 1;
+  ledNumbers[9] = 1;
+  ledNumbers[11] = 1;
+  ledNumbers[13] = 1;
+  ledNumbers[15] = 1;
+}
+}
+
+
+
+
+ void ledState(int a){
+  switch(a){
+    case 0: //button 1 yellow
+    digitalWrite(A5, LOW); 
+  digitalWrite(A4, HIGH); //BLUE
+  digitalWrite(A3, HIGH);//PURPLE
+  digitalWrite(4, HIGH);//GREY
+  digitalWrite(3, LOW);//BLACK
+  digitalWrite(2, LOW);//WHITE
+  digitalWrite(5, LOW);//RED
+  digitalWrite(6, LOW);//YELLOW
+  digitalWrite(7, LOW);//ORANGE
+            break;
+    case 1: //button 1 green
+    digitalWrite(A5, LOW); 
+  digitalWrite(A4, HIGH);
+  digitalWrite(A3, HIGH);
+  digitalWrite(7, HIGH);//ORANGE
+  digitalWrite(4, LOW);//GREY
+  digitalWrite(3, LOW);//BLACK
+  digitalWrite(2, LOW);//WHITE
+  digitalWrite(5, LOW);//RED
+  digitalWrite(6, LOW);//YELLOW
+  break;
+  case 2: //button 2 yellow
+  digitalWrite(A5, LOW); //turn the other anode on high and make the previous one low
+ digitalWrite(A4, HIGH); //BLUE
+ digitalWrite(A3, HIGH);//PURPLE
+ digitalWrite(3, HIGH);//GREY
+ digitalWrite(4, LOW);//GREY
+ digitalWrite(2, LOW);//WHITE
+ digitalWrite(5, LOW);//RED
+ digitalWrite(6, LOW);//YELLOW
+ digitalWrite(7, LOW);//ORANGE
+break;
+ case 3: //button 2 green
+ digitalWrite(A5, LOW); 
+  digitalWrite(A4, HIGH);
+  digitalWrite(A3, HIGH);
+  digitalWrite(6, HIGH);//ORANGE
+  digitalWrite(4, LOW);//GREY
+  digitalWrite(3, LOW);//BLACK
+  digitalWrite(2, LOW);//WHITE
+  digitalWrite(7, LOW);//RED
+  digitalWrite(5, LOW);//YELLOW
+break;
+  case 4: //button 3 yellow
+  digitalWrite(A5, LOW); //turn the other anode on high and make the previous one low
+ digitalWrite(A4, HIGH); //BLUE
+ digitalWrite(A3, HIGH);//PURPLE
+ digitalWrite(2, HIGH);//GREY
+ digitalWrite(3, LOW);//BLACK
+ digitalWrite(4, LOW);//GREY
+ digitalWrite(5, LOW);//RED
+ digitalWrite(6, LOW);//YELLOW
+ digitalWrite(7, LOW);//ORANGE
+break;
+ case 5: //button 3 green
+ digitalWrite(A5, LOW); 
+  digitalWrite(A4, HIGH);
+  digitalWrite(A3, HIGH);
+  digitalWrite(5, HIGH);//ORANGE
+  digitalWrite(4, LOW);//GREY
+  digitalWrite(3, LOW);//BLACK
+  digitalWrite(2, LOW);//WHITE
+  digitalWrite(5, LOW);//RED
+  digitalWrite(7, LOW);//YELLOW
+break;
+  case 6: //button 4 yellow
+  digitalWrite(A4, LOW); //turn the other anode on high and make the previous one low
+ digitalWrite(A5, HIGH); //BLUE
+ digitalWrite(A3, HIGH);//PURPLE
+ digitalWrite(4, HIGH);//GREY
+ digitalWrite(3, LOW);//BLACK
+ digitalWrite(2, LOW);//WHITE
+ digitalWrite(5, LOW);//RED
+ digitalWrite(6, LOW);//YELLOW
+ digitalWrite(7, LOW);//ORANGE
+break;
+ case 7: //button 4 green
+ digitalWrite(A4, LOW); 
+  digitalWrite(A5, HIGH);
+  digitalWrite(A3, HIGH);
+  digitalWrite(7, HIGH);//ORANGE
+  digitalWrite(4, LOW);//GREY
+  digitalWrite(3, LOW);//BLACK
+  digitalWrite(2, LOW);//WHITE
+  digitalWrite(5, LOW);//RED
+  digitalWrite(6, LOW);//YELLOW
+break;
+  case 8: //button 5 yellow
+  digitalWrite(A4, LOW); //turn the other anode on high and make the previous one low
+ digitalWrite(A5, HIGH); //BLUE
+ digitalWrite(A3, HIGH);//PURPLE
+ digitalWrite(3, HIGH);//BLACK
+ digitalWrite(4, LOW);//GREY
+ digitalWrite(2, LOW);//WHITE
+ digitalWrite(5, LOW);//RED
+ digitalWrite(6, LOW);//YELLOW
+ digitalWrite(7, LOW);//ORANGE
+break;
+ case 9: //button 5 green
+ digitalWrite(A4, LOW); 
+  digitalWrite(A5, HIGH);
+  digitalWrite(A3, HIGH);
+  digitalWrite(6, HIGH);//ORANGE
+  digitalWrite(4, LOW);//GREY
+  digitalWrite(3, LOW);//BLACK
+  digitalWrite(2, LOW);//WHITE
+  digitalWrite(5, LOW);//RED
+  digitalWrite(7, LOW);//YELLOW
+break;
+  case 10: //button 6 yellow
+  digitalWrite(A4, LOW); //turn the other anode on high and make the previous one low
+ digitalWrite(A5, HIGH); //BLUE
+ digitalWrite(A3, HIGH);//PURPLE
+ digitalWrite(2, HIGH);//GREY
+ digitalWrite(3, LOW);//BLACK
+ digitalWrite(4, LOW);//WHITE
+ digitalWrite(5, LOW);//RED
+ digitalWrite(6, LOW);//YELLOW
+ digitalWrite(7, LOW);//ORANGE
+break;
+ case 11: //button 6 green
+ digitalWrite(A4, LOW); 
+  digitalWrite(A5, HIGH);
+  digitalWrite(A3, HIGH);
+  digitalWrite(5, HIGH);//ORANGE
+  digitalWrite(4, LOW);//GREY
+  digitalWrite(3, LOW);//BLACK
+  digitalWrite(2, LOW);//WHITE
+  digitalWrite(7, LOW);//RED
+  digitalWrite(6, LOW);//YELLOW
+break;
+  case 12: //button 7 yellow
+  digitalWrite(A3, LOW); //turn the other anode on high and make the previous one low
+ digitalWrite(A4, HIGH); //BLUE
+ digitalWrite(A5, HIGH);//PURPLE
+ digitalWrite(4, HIGH);//GREY
+ digitalWrite(3, LOW);//BLACK
+ digitalWrite(2, LOW);//WHITE
+ digitalWrite(5, LOW);//RED
+ digitalWrite(6, LOW);//YELLOW
+ digitalWrite(7, LOW);//ORANGE
+break;
+ case 13: //button 7 green
+ digitalWrite(A3, LOW); 
+  digitalWrite(A4, HIGH);
+  digitalWrite(A5, HIGH);
+  digitalWrite(7, HIGH);//ORANGE
+  digitalWrite(4, LOW);//GREY
+  digitalWrite(3, LOW);//BLACK
+  digitalWrite(2, LOW);//WHITE
+  digitalWrite(5, LOW);//RED
+  digitalWrite(6, LOW);//YELLOW
+break;
+  case 14: //button 8 yellow
+  digitalWrite(A3, LOW); //turn the other anode on high and make the previous one low
+ digitalWrite(A4, HIGH); //BLUE
+ digitalWrite(A5, HIGH);//PURPLE
+ digitalWrite(3, HIGH);//GREY
+ digitalWrite(4, LOW);//BLACK
+ digitalWrite(2, LOW);//WHITE
+ digitalWrite(5, LOW);//RED
+ digitalWrite(6, LOW);//YELLOW
+ digitalWrite(7, LOW);//ORANGE
+break;
+ case 15: //button 8 green
+ digitalWrite(A3, LOW); 
+  digitalWrite(A5, HIGH);
+  digitalWrite(A4, HIGH);
+  digitalWrite(6, HIGH);//ORANGE
+  digitalWrite(4, LOW);//GREY
+  digitalWrite(3, LOW);//BLACK
+  digitalWrite(2, LOW);//WHITE
+  digitalWrite(5, LOW);//RED
+  digitalWrite(7, LOW);//YELLOW
+break;
+  case 16: //button 9 yellow
+  digitalWrite(A3, LOW); //turn the other anode on high and make the previous one low
+ digitalWrite(A4, HIGH); //BLUE
+ digitalWrite(A5, HIGH);//PURPLE
+ digitalWrite(2, HIGH);//GREY
+ digitalWrite(3, LOW);//BLACK
+ digitalWrite(4, LOW);//WHITE
+ digitalWrite(5, LOW);//RED
+ digitalWrite(6, LOW);//YELLOW
+ digitalWrite(7, LOW);//ORANGE
+break;
+ case 17: //button 9 green
+ digitalWrite(A3, LOW); 
+  digitalWrite(A4, HIGH);
+  digitalWrite(A5, HIGH);
+  digitalWrite(5, HIGH);//ORANGE
+  digitalWrite(4, LOW);//GREY
+  digitalWrite(3, LOW);//BLACK
+  digitalWrite(2, LOW);//WHITE
+  digitalWrite(7, LOW);//RED
+  digitalWrite(6, LOW);//YELLOW
+  break;
+  }
+
+
+ }
